@@ -35,6 +35,6 @@ server.get("/", async () => {
           `
 })
 
-server.listen({ port: 8080, host: '0.0.0.0' }).then((uri) => {
+server.listen({ port: 3000, host: '0.0.0.0' }).then((uri) => {
   console.log('App is running at', uri)
 })
