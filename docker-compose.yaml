@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  app:
+    image: rodrigopacheco100/node-nginx
+    build: .
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 60s docker-entrypoint.sh npm start
+    tty: true
+    networks:
+      - app-tier
+    ports:
+      - 8080:8080
+    volumes:
+      - "./:/app"
+    depends_on:
+      db:
+        condition: service_started
+
+  db:
+    image: 'bitnami/mysql:latest'
+    networks:
+      - app-tier
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mydb
+
+networks:
+  app-tier:
+    driver: bridge
